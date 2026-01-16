@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Math Garden - Universal Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app-container">
+        <!-- Main Menu -->
+        <section id="menu-screen" class="active-screen">
+            <h1 class="game-title">🔢 Math Garden</h1>
+
+            <!-- Dashboard Row -->
+            <div class="dashboard-row">
+                <div id="player-profile">
+                    <span id="current-avatar-display">🙂</span>
+                </div>
+
+                <div id="daily-quest-card" class="quest-card compact">
+                    <div class="progress-bar small">
+                        <div id="quest-fill" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p id="quest-text">0/20 Questions</p>
+                </div>
+
+                <button id="garden-btn" class="menu-btn compact-btn"
+                    style="background-color: #38B000; border-color: #007200; color: white;">
+                    🌳
+                </button>
+            </div>
+
+            <!-- Step 1: Choose Operation -->
+            <div id="operation-select" class="menu-step">
+                <h2>Choose an Activity</h2>
+                <div class="grid-menu">
+                    <button class="menu-btn op-btn" data-op="add">➕ Addition</button>
+                    <button class="menu-btn op-btn" data-op="sub">➖ Subtraction</button>
+                    <button class="menu-btn op-btn" data-op="mul">✖️ Multiply</button>
+                    <button class="menu-btn op-btn" data-op="div">➗ Division</button>
+                    <button class="menu-btn op-btn full-width" data-op="mix">🎲 Mixed</button>
+                    <button id="btn-time-attack" class="menu-btn full-width"
+                        style="background-color: #FF006E; color: white;">⏱️ Time Attack (60s)</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Choose Difficulty (Hidden initially) -->
+            <div id="difficulty-select" class="menu-step hidden">
+                <h2>Choose Difficulty</h2>
+                <div class="col-menu">
+                    <button class="menu-btn diff-btn" data-diff="easy">🟢 Easy (1-10)</button>
+                    <button class="menu-btn diff-btn" data-diff="medium">🟡 Medium (1-50)</button>
+                    <button class="menu-btn diff-btn" data-diff="hard">🔴 Hard (1-100)</button>
+                    <button id="back-to-ops" class="text-btn">↩ Back</button>
+                </div>
+            </div>
+
+            <!-- Settings / Customization Button -->
+            <button id="settings-btn" class="icon-btn floating-action">⚙️</button>
+        </section>
+
+        <!-- Customization Screen (Themes & Avatars) -->
+        <section id="customization-screen" class="hidden">
+            <h1 class="game-title">🎨 Themes</h1>
+            <div class="grid-menu three-col">
+                <button class="theme-option" onclick="applyTheme('default')"
+                    style="background: #CBF3F0;">Default</button>
+                <button class="theme-option" onclick="applyTheme('space')"
+                    style="background: #10002B; color: white;">Space 🚀</button>
+                <button class="theme-option" onclick="applyTheme('ocean')" style="background: #CAF0F8;">Ocean
+                    🌊</button>
+                <button class="theme-option" onclick="applyTheme('jungle')" style="background: #FFE8D6;">Jungle
+                    🦁</button>
+            </div>
+
+            <h1 class="game-title" style="margin-top: 30px;">🦁 Avatars</h1>
+            <div class="star-balance">Balance: ⭐ <span id="shop-star-count">0</span></div>
+            <div id="avatar-grid" class="grid-menu three-col">
+                <!-- Injected by JS -->
+            </div>
+
+            <button id="back-from-settings" class="menu-btn" style="margin-top: 20px;">✅ Done</button>
+        </section>
+
+        <!-- Game Interface -->
+        <section id="game-screen" class="hidden">
+            <div class="header-bar">
+                <button id="back-home-btn" class="icon-btn">🏠</button>
+                <div class="progress-bar">
+                    <div id="game-progress-fill" class="progress-fill"></div>
+                </div>
+                <!-- Sound Toggle -->
+                <button id="sound-toggle" class="icon-btn">🔊</button>
+                <div class="stars-display">⭐ <span id="star-count">0</span></div>
+            </div>
+
+            <div id="game-area">
+                <div id="question-container"></div>
+                <!-- Visual Helper Area for Easy Mode -->
+                <div id="visual-helper"></div>
+                <div id="options-container"></div>
+            </div>
+
+            <!-- Feedback Overlay -->
+            <div id="feedback-overlay" class="hidden">
+                <div class="feedback-content">
+                    <span id="feedback-icon">🎉</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Garden Screen -->
+        <section id="garden-screen" class="hidden">
+            <div class="header-bar">
+                <button id="back-garden-btn" class="icon-btn">🏠</button>
+                <div class="game-title">My Garden</div>
+                <div class="stars-display">⭐ <span id="garden-star-count">0</span></div>
+            </div>
+
+            <div class="garden-container"
+                style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+                <div id="garden-tree" style="font-size: 8rem; margin-bottom: 20px; transition: transform 0.5s;">🌱</div>
+                <h2 id="tree-name">My Apple Tree</h2>
+                <p style="font-size: 1.5rem;">Level <span id="tree-level">1</span></p>
+
+                <div class="progress-bar" style="width: 200px; margin: 10px 0; height: 20px;">
+                    <div id="tree-xp-fill" class="progress-fill" style="width: 0%; background-color: #38B000;"></div>
+                </div>
+                <p>Growth: <span id="tree-xp">0</span> / <span id="tree-next-level">100</span></p>
+
+                <div class="garden-actions" style="margin-top: 30px; display: flex; gap: 20px;">
+                    <button id="water-btn" class="menu-btn" style="background-color: #4CC9F0; border-color: #0077B6;">💧
+                        Water (10⭐)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memory Minigame Screen -->
+        <section id="memory-screen" class="hidden">
+            <div class="header-bar">
+                <button id="back-memory-btn" class="icon-btn">🏠</button>
+                <div class="game-title" style="font-size: 2rem;">🧠 Memory</div>
+                <div class="stars-display">Moves: <span id="memory-moves">0</span></div>
+            </div>
+
+            <div id="memory-grid" class="memory-grid">
+                <!-- Cards injected by JS -->
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

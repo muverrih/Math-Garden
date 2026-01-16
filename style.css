@@ -1,0 +1,619 @@
+:root {
+    /* Default (Garden) */
+    --primary-color: #FF9F1C;
+    --secondary-color: #2EC4B6;
+    --accent-color: #E71D36;
+    --bg-color: #CBF3F0;
+    --text-color: #2F3E46;
+    --card-bg: #FFFFFF;
+    --success: #4CC9F0;
+    --warning: #FFBF69;
+}
+
+/* Themes */
+body.theme-space {
+    --primary-color: #7209B7;
+    --secondary-color: #4361EE;
+    --accent-color: #F72585;
+    --bg-color: #10002B;
+    /* Deep Space */
+    --text-color: #E0AAFF;
+    --card-bg: #240046;
+}
+
+body.theme-ocean {
+    --primary-color: #0096C7;
+    --secondary-color: #48CAE4;
+    --accent-color: #FF7D00;
+    /* Orange Fish */
+    --bg-color: #CAF0F8;
+    --text-color: #023E8A;
+    --card-bg: #FFFFFF;
+}
+
+body.theme-jungle {
+    --primary-color: #38B000;
+    --secondary-color: #CCFF33;
+    --accent-color: #D00000;
+    --bg-color: #FFE8D6;
+    --text-color: #3F1D0B;
+    --card-bg: #EAE2B7;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    /* Prevent text selection for app-like feel */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    /* Improves touch response */
+}
+
+body {
+    font-family: 'Fredoka', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#app-container {
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    background-color: var(--card-bg);
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Screens */
+section {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    overflow-y: auto;
+    /* Allow scrolling if content is too tall */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+    position: absolute;
+    /* Stack screens */
+    top: 0;
+    left: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Menu Screen */
+#menu-screen {
+    justify-content: flex-start;
+    padding-top: 20px;
+    /* Reduced from 50px */
+    gap: 15px;
+    /* Reduced from 20px */
+}
+
+.menu-step {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: popIn 0.3s ease;
+}
+
+.menu-step h2 {
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.grid-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 90%;
+}
+
+.grid-menu.three-col {
+    grid-template-columns: 1fr 1fr;
+    /* on mobile still 2 */
+}
+
+@media (min-width: 500px) {
+    .grid-menu.three-col {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.col-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+}
+
+.menu-btn {
+    background-color: var(--card-bg);
+    border: 3px solid var(--secondary-color);
+    border-radius: 15px;
+    padding: 15px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 0px rgba(0, 0, 0, 0.1);
+    transition: all 0.1s;
+    color: var(--text-color);
+}
+
+.menu-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.full-width {
+    grid-column: span 2;
+    background-color: #9D4EDD;
+    /* Vibrant Purple */
+    border-color: #5A189A;
+    color: var(--white);
+}
+
+.diff-btn[data-diff="easy"] {
+    border-color: var(--success);
+}
+
+.diff-btn[data-diff="medium"] {
+    border-color: var(--warning);
+}
+
+.diff-btn[data-diff="hard"] {
+    border-color: var(--accent-color);
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.floating-action {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--white);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border: 2px solid #eee;
+}
+
+.theme-option {
+    border: 3px solid transparent;
+    border-radius: 15px;
+    padding: 20px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-option:active {
+    transform: scale(0.95);
+}
+
+/* Avatar Shop */
+.star-balance {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.avatar-card {
+    background-color: var(--card-bg);
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.avatar-card.unlocked {
+    border-color: var(--secondary-color);
+}
+
+.avatar-card.selected {
+    border-color: var(--primary-color);
+    background-color: var(--warning);
+    transform: scale(1.05);
+}
+
+.avatar-card.locked {
+    opacity: 0.7;
+    filter: grayscale(1);
+    border-color: #ccc;
+}
+
+.avatar-icon {
+    font-size: 3rem;
+    margin-bottom: 5px;
+}
+
+.avatar-cost {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.avatar-cost {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Memory Game */
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+/* ... existing memory styles ... */
+
+/* Daily Quest Card */
+.quest-card {
+    background-color: var(--white);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 2px solid var(--primary-color);
+    width: 90%;
+    max-width: 350px;
+    /* Slightly wider */
+}
+
+/* Dashboard Row */
+.dashboard-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 95%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+#player-profile {
+    font-size: 3rem;
+    padding: 5px;
+    background: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quest-card.compact {
+    flex-grow: 1;
+    margin-bottom: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.menu-btn.compact-btn {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    /* Remove default margins if any */
+}
+
+
+.quest-card h3 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.progress-bar.small {
+    height: 10px;
+    margin-bottom: 5px;
+}
+
+/* Game Screen */
+.memory-card {
+    background-color: var(--white);
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+    border: 3px solid var(--primary-color);
+}
+
+.memory-card.flipped {
+    transform: rotateY(180deg);
+    background-color: var(--white);
+}
+
+.memory-card.matched {
+    border-color: var(--success);
+    background-color: #e0faff;
+    animation: popIn 0.3s;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    /* Important for hiding back of card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+}
+
+.card-front {
+    transform: rotateY(180deg);
+}
+
+.card-back {
+    background-color: var(--secondary-color);
+    background-image: linear-gradient(45deg, #ffffff 25%, transparent 25%, transparent 75%, #ffffff 75%, #ffffff), linear-gradient(45deg, #ffffff 25%, transparent 25%, transparent 75%, #ffffff 75%, #ffffff);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    opacity: 0.8;
+}
+
+/* Game Screen */
+.header-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 15px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--success);
+    transition: width 0.5s ease;
+}
+
+.stars-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Game Area */
+#game-area {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Changed from space-evenly to center with gap */
+    gap: 20px;
+    align-items: center;
+    overflow-y: auto;
+    /* Allow scrolling in game area if needed */
+}
+
+#question-container {
+    font-size: 3.5rem;
+    font-weight: bold;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+}
+
+#visual-helper {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+
+.object-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    max-width: 200px;
+}
+
+.counter-object {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 2rem;
+    /* Fallback if using emojis */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#options-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+}
+
+.option-btn {
+    background-color: var(--card-bg);
+    border: 3px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 3rem;
+    font-family: inherit;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 0px var(--primary-color);
+}
+
+.option-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--primary-color);
+}
+
+/* Feedback Overlay */
+#feedback-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Darker for better contrast with themes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    pointer-events: none;
+    /* Let clicks pass through if needed, though usually we want to block */
+}
+
+.feedback-content {
+    font-size: 8rem;
+    animation: scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animations */
+@keyframes popIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+/* Responsive */
+@media (min-width: 600px) {
+    #app-container {
+        border-radius: 30px;
+        height: 90vh;
+        /* Floating card on desktop */
+    }
+}
